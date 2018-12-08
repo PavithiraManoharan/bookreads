@@ -23,6 +23,7 @@ class BooksApp extends Component {
     })
     }))
     BooksAPI.update(book, shelfName)
+    console.log(book)
   }
 
   /**

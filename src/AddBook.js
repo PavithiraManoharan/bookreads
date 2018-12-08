@@ -14,6 +14,7 @@ class AddBook extends Component {
 
     /**
      * The Books API is searched with the help of query and saved in the filtered books
+     * Throttle / Debounce implemented so that search results are only showed after 4 characters are entered
      */
     performSearch = (query) => {
         this.setState({query: query})
@@ -30,7 +31,15 @@ class AddBook extends Component {
      * Props from main App are called to add the book from the search results in the shelves
      */
     moveShelf = (shelf, book) => {
-        this.props.allBooks.push(book)
+        let doesBookExist = false
+        this.props.allBooks.map((oldBook) => {
+            if(oldBook.id === book.id) {
+                doesBookExist = true
+            }
+        })
+        if(!doesBookExist) {
+            this.props.allBooks.push(book)
+        }
         this.props.moveShelf(shelf, book)
     }
 
@@ -66,7 +75,7 @@ class AddBook extends Component {
                                             <div className="book-top">
                                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                                 <div className="book-shelf-changer">
-                                                    <select onChange={(event) => this.moveShelf(event.target.value, book)}>
+                                                    <select onChange={(event) => this.moveShelf(event.target.value, book)} value={book.shelf}>
                                                         <option value="move">Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
