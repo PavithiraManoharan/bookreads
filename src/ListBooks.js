@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 class ListBooks extends Component {
 
+    /**
+     * Shelves with their titles to dynamically display shelves with books
+     */
     shelves = [
         {
             id: 'currentlyReading',
@@ -69,6 +73,11 @@ class ListBooks extends Component {
             </div>
         )
     }
+}
+
+ListBooks.propTypes = {
+    allBooks: PropTypes.array.isRequired,
+    moveShelf: PropTypes.func.isRequired
 }
 
 export default ListBooks

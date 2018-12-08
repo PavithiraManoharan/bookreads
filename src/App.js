@@ -39,7 +39,7 @@ class BooksApp extends Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <ListBooks 
+          <ListBooks
             allBooks = { this.state.allBooks }
             moveShelf = {this.moveShelf}
          />

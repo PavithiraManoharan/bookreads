@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 
 class AddBook extends Component {
+    /**
+     * Query to search, the result array of filtered books saved in state
+     */
     state = {
         query: '',
         filteredBooks: []
     }
 
+    /**
+     * The Books API is searched with the help of query and saved in the filtered books
+     */
     performSearch = (query) => {
         this.setState({query: query})
         if(this.state.query.length && this.state.query.length > 2) {
@@ -19,13 +26,15 @@ class AddBook extends Component {
         }
     }
 
+    /**
+     * Props from main App are called to add the book from the search results in the shelves
+     */
     moveShelf = (shelf, book) => {
         this.props.allBooks.push(book)
         this.props.moveShelf(shelf, book)
     }
 
     render() {
-
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -86,6 +95,11 @@ class AddBook extends Component {
             </div>
         )
     }
+}
+
+AddBook.propTypes = {
+    allBooks: PropTypes.array.isRequired,
+    moveShelf: PropTypes.func.isRequired
 }
 
 export default AddBook
