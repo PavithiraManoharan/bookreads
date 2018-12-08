@@ -25,7 +25,7 @@ class AddBook extends Component {
     }
 
     render() {
-           
+
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -46,16 +46,19 @@ class AddBook extends Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {(this.state.query.length) ? 
+                        {(this.state.query.length) ?
                             (this.state.filteredBooks.length) ?
-                                this.state.filteredBooks.map((book) => (
+                                this.state.filteredBooks.filter((book) => {
+                                    return (book.imageLinks && book.authors)
+                                })
+                                .map((book) => (
                                     <li key={book.id}>
                                         <div className="book" key={book.name}>
                                             <div className="book-top">
                                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                                 <div className="book-shelf-changer">
-                                                    <select onClick={(event) => this.moveShelf(event.target.value, book)}>
-                                                        <option value="move" disabled>Move to...</option>
+                                                    <select onChange={(event) => this.moveShelf(event.target.value, book)}>
+                                                        <option value="move">Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
                                                         <option value="read">Read</option>
@@ -65,9 +68,9 @@ class AddBook extends Component {
                                             </div>
                                             <div className="book-title">{book.title}</div>
                                             <div className="book-authors">
-                                                {(book.authors).map((author) => 
+                                                {book.authors ? (book.authors).map((author) =>
                                                 <span key={author} className='book-author'>{author}</span>
-                                                )}
+                                                ) : (<div>Looks like some error occurred!</div>)}
                                             </div>
                                         </div>
                                     </li>
@@ -75,7 +78,7 @@ class AddBook extends Component {
                                 : (
                                     <div>Sorry no books were found that matched your search!</div>
                                 )
-                            : ( 
+                            : (
                                 <div> Type something to start a search!</div>
                          )}
                     </ol>

@@ -31,7 +31,7 @@ class ListBooks extends Component {
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {allBooks.filter((book) => {
-                                        return book.shelf === shelf.id
+                                        return (book.shelf === shelf.id)
                                     })
                                     .map((book) => {
                                         return <li key={book.id}>
@@ -50,7 +50,7 @@ class ListBooks extends Component {
                                                 </div>
                                                 <div className="book-title">{book.title}</div>
                                                 <div className="book-authors">
-                                                    {(book.authors).map((author) => 
+                                                    {(book.authors).map((author) =>
                                                     <span className='book-author' key={author}>{author}</span>
                                                     )}
                                                 </div>
