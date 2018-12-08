@@ -36,6 +36,7 @@ class AddBook extends Component {
             if(oldBook.id === book.id) {
                 doesBookExist = true
             }
+            return book
         })
         if(!doesBookExist) {
             this.props.allBooks.push(book)
