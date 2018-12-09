@@ -44,6 +44,9 @@ class AddBook extends Component {
         this.props.moveShelf(shelf, book)
     }
 
+    /**
+     * If the found book is already in the bookshelf, update the bookshelf name to the found shelf
+     */
     getShelf = (book) => {
         for(let shelfBook of this.props.allBooks) {
            if(shelfBook.id === book.id) {
