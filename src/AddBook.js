@@ -32,7 +32,7 @@ class AddBook extends Component {
      */
     moveShelf = (shelf, book) => {
         let doesBookExist = false
-        this.props.allBooks.map((oldBook) => {
+        this.props.allBooks && this.props.allBooks.map((oldBook) => {
             if(oldBook.id === book.id) {
                 doesBookExist = true
             }
@@ -42,6 +42,14 @@ class AddBook extends Component {
             this.props.allBooks.push(book)
         }
         this.props.moveShelf(shelf, book)
+    }
+
+    getShelf = (book) => {
+        for(let shelfBook of this.props.allBooks) {
+           if(shelfBook.id === book.id) {
+               return shelfBook.shelf
+           }
+        }
     }
 
     render() {
@@ -67,7 +75,7 @@ class AddBook extends Component {
                     <ol className="books-grid">
                         {(this.state.query.length) ?
                             (this.state.filteredBooks.length) ?
-                                this.state.filteredBooks.filter((book) => {
+                                this.state.filteredBooks && this.state.filteredBooks.filter((book) => {
                                     return (book.imageLinks && book.authors)
                                 })
                                 .map((book) => (
@@ -76,8 +84,8 @@ class AddBook extends Component {
                                             <div className="book-top">
                                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                                 <div className="book-shelf-changer">
-                                                    <select onChange={(event) => this.moveShelf(event.target.value, book)} value={book.shelf}>
-                                                        <option value="move">Move to...</option>
+                                                    <select onChange={(event) => this.moveShelf(event.target.value, book)} value={this.getShelf(book) ? this.getShelf(book) : 'none'}>
+                                                        <option value="move" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
                                                         <option value="read">Read</option>
@@ -87,9 +95,9 @@ class AddBook extends Component {
                                             </div>
                                             <div className="book-title">{book.title}</div>
                                             <div className="book-authors">
-                                                {book.authors ? (book.authors).map((author) =>
+                                                {book.authors && (book.authors).map((author) =>
                                                 <span key={author} className='book-author'>{author}</span>
-                                                ) : (<div>Looks like some error occurred!</div>)}
+                                                )}
                                             </div>
                                         </div>
                                     </li>

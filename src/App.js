@@ -15,7 +15,7 @@ class BooksApp extends Component {
    */
   moveShelf = (shelfName, book) => {
     this.setState((state) => ({
-      allBooks: state.allBooks.map((eachBook) => {
+      allBooks: state.allBooks && state.allBooks.map((eachBook) => {
         if(book.title === eachBook.title) {
           eachBook.shelf = shelfName
         }
